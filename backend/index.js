@@ -11,7 +11,7 @@ const port = process.env.PORT || 3000;
 
 // MUST COME FIRST
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: 'https://note-taking-app-seven-bice.vercel.app',
   credentials: true
 }));
 
