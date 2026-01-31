@@ -1,12 +1,7 @@
 import { createContext, useEffect, useState } from "react";
-import axios from "axios";
+import BACKEND_URL from "../api/url";
 
 export const NoteContext = createContext();
-
-const BACKEND_URL = axios.create({
-  baseURL: "http://localhost:3000/api/v1/noteapp",
-  headers: { "Content-Type": "application/json" }
-});
 
 export const NoteProvider = ({ children }) => {
   const [notes, setNotes] = useState([]);
@@ -29,7 +24,7 @@ export const NoteProvider = ({ children }) => {
   const createNote = async (noteData) => {
     try {
       const { data } = await BACKEND_URL.post("/create-note", noteData);
-      setNotes(prev => [data, ...prev]);
+      setNotes((prev) => [data, ...prev]);
     } catch (err) {
       console.error("Create failed:", err);
     }
@@ -39,7 +34,9 @@ export const NoteProvider = ({ children }) => {
   const updateNote = async (id, updatedData) => {
     try {
       const { data } = await BACKEND_URL.put(`/update-note/${id}`, updatedData);
-      setNotes(prev => prev.map(note => note._id === id ? data : note));
+      setNotes((prev) =>
+        prev.map((note) => (note._id === id ? data : note))
+      );
     } catch (err) {
       console.error("Update failed:", err);
     }
@@ -49,7 +46,7 @@ export const NoteProvider = ({ children }) => {
   const deleteNote = async (id) => {
     try {
       await BACKEND_URL.delete(`/delete-note/${id}`);
-      setNotes(prev => prev.filter(note => note._id !== id));
+      setNotes((prev) => prev.filter((note) => note._id !== id));
     } catch (err) {
       console.error("Delete failed:", err);
     }
@@ -60,7 +57,9 @@ export const NoteProvider = ({ children }) => {
   }, []);
 
   return (
-    <NoteContext.Provider value={{ notes, loading, createNote, getNotes, updateNote, deleteNote }}>
+    <NoteContext.Provider
+      value={{ notes, loading, createNote, getNotes, updateNote, deleteNote }}
+    >
       {children}
     </NoteContext.Provider>
   );
