@@ -11,5 +11,4 @@ createRoot(document.getElementById('root')).render(
   </NoteProvider>
   </BrowserRouter>
 )
-
-console.log("BUILD API URL =", import.meta.env.VITE_API_BASE_URL);
+console.error("Fetch failed:", err);
