@@ -11,4 +11,3 @@ createRoot(document.getElementById('root')).render(
   </NoteProvider>
   </BrowserRouter>
 )
-console.error("Fetch failed:", err);
